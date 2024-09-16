@@ -1,8 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
 import { Text, TextInput, View, TouchableOpacity } from 'react-native';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import Entypo from 'react-native-vector-icons/Entypo';
+import { FontAwesome, Entypo } from '@expo/vector-icons';
 
 export default function Login() {
   
@@ -71,8 +70,11 @@ export default function Login() {
         </TouchableOpacity>
       </View>
 
-      <View className='flex w-full items-center justify-center h-6 mt-5'>
-        <Text className='text-base font-bold font-archivo'>não tem conta? <Text className='underline'>crie agora!</Text></Text>
+      <View className='flex flex-row w-full h-6 mt-5'>
+        <Text className='text-base font-bold font-archivo'>não tem conta? </Text>
+        <TouchableOpacity onPress={() => {/* Navegar para a tela de cadastro ou abrir um modal */}}>
+        <Text className='text-base font-bold font-archivo underline'>crie agora!</Text>
+        </TouchableOpacity>
       </View>
 
       <View className='flex w-full items-center absolute bottom-7'>

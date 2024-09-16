@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useEffect } from 'react';
 import { View } from 'react-native';
-import Login from './src/pages/Login';
+import Login from './src/screens/Login';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 
