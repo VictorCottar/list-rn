@@ -6,10 +6,24 @@ import Entypo from 'react-native-vector-icons/Entypo';
 
 export default function Login() {
   
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   
-  return (
+  const getLogin = async () => {
+    if (username === '' || password === '') {
+      alert('Preencha todos os campos!');
+      return;
+    }
 
+    if (username.length > 5 && password.length > 5) {
+      alert('Usuário e senha corretos');
+    } else {
+      alert('Usuário ou senha precisa ser maior que 5 caracteres');
+    }
+  };
+
+  return (
     <View className='flex-1 items-center'>
 
       <View className='flex justify-end items-center w-full h-36'>
@@ -25,28 +39,33 @@ export default function Login() {
         <Text className='text-2xl font-bold font-archivo'>usuário</Text>
         <TextInput
           className='border-2 border-r-4 border-b-4 h-12 w-80 p-2 rounded-sm shadow-shape'
-          placeholder='digite seu usuário'
+          placeholder='Digite seu usuário'
+          value={username}
+          onChangeText={setUsername}
         />
 
         <Text className='text-2xl font-bold font-archivo'>senha</Text>
         <View className='flex flex-row items-center'>
           <TextInput
             className='border-2 border-r-0 border-b-4 h-12 w-72 p-2 shadow-shape'
-            placeholder='digite sua senha'
+            placeholder='Digite sua senha'
             secureTextEntry={!showPassword}
+            value={password}
+            onChangeText={setPassword}
           />
 
-            <TouchableOpacity 
+          <TouchableOpacity 
             activeOpacity={1} 
             className='flex items-left justify-center w-8 h-12 border-b-4 border-r-4 border-t-2 rounded-sm rounded-l-none'
             onPress={() => setShowPassword(!showPassword)}
-            >
+          >
             <Entypo name={showPassword ? 'eye-with-line' : 'eye'} size={22} />
-            </TouchableOpacity>
-
+          </TouchableOpacity>
         </View>
+
         <TouchableOpacity
           className='flex justify-center items-center border-2 border-r-4 border-b-4 h-12 w-80 p-2 rounded-sm shadow-shape'
+          onPress={getLogin}
         >
           <Text className='text-xl font-bold font-archivo'>entrar</Text>
         </TouchableOpacity>
@@ -57,8 +76,9 @@ export default function Login() {
       </View>
 
       <View className='flex w-full items-center absolute bottom-7'>
-        <Text className='font-bold font-archivo'>&copy; 2024 list. Todos os direitos reservados </Text>
+        <Text className='font-bold font-archivo'>&copy; 2024 list. todos os direitos reservados</Text>
       </View>
+
       <StatusBar style="auto" />
     </View>
   );
