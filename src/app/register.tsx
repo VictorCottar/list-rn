@@ -2,6 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
 import { Text, TextInput, View, TouchableOpacity } from 'react-native';
 import { FontAwesome, Entypo } from '@expo/vector-icons';
+import { Link } from 'expo-router';
 
 export default function Login() {
   
@@ -25,13 +26,14 @@ export default function Login() {
   return (
     <View className='flex-1 items-center'>
 
-      <View className='flex justify-end items-center w-full h-36'>
+      <View className='flex justify-end items-center w-full h-24'>
         <Text className='text-5xl font-bold font-archivo'>list</Text>
       </View>
 
-      <View className='flex justify-center items-center w-full h-40'>
+      <View className='flex justify-center items-center w-full h-44 gap-1'>
         <FontAwesome name='check-square' size={80} />
-        <Text className='text-2xl font-bold font-archivo'>bem-vindo de volta!</Text>
+        <Text className='text-2xl font-bold font-archivo'>vamos começar?</Text>
+        <Text className='text-lg font-bold font-archivo'>crie sua conta e mantenha suas tarefas em dia!</Text>
       </View>
 
       <View className='flex flex-col gap-1'>
@@ -66,18 +68,20 @@ export default function Login() {
           className='flex justify-center items-center border-2 border-r-4 border-b-4 h-12 w-80 p-2 rounded-sm shadow-shape'
           onPress={getLogin}
         >
-          <Text className='text-xl font-bold font-archivo'>entrar</Text>
+          <Text className='text-xl font-bold font-archivo'>cadastrar-se</Text>
         </TouchableOpacity>
       </View>
 
-      <View className='flex flex-row w-full h-6 mt-5'>
-        <Text className='text-base font-bold font-archivo'>não tem conta? </Text>
-        <TouchableOpacity onPress={() => {/* Navegar para a tela de cadastro ou abrir um modal */}}>
-        <Text className='text-base font-bold font-archivo underline'>crie agora!</Text>
-        </TouchableOpacity>
+      <View className='flex flex-row justify-center w-full h-6 mt-5'>
+        <Text className='text-base font-bold font-archivo'>já tem conta? </Text>
+          <TouchableOpacity activeOpacity={1}>
+            <Link className='text-base font-bold font-archivo underline' href={"/"}>
+              faça o login!
+            </Link>
+          </TouchableOpacity>
       </View>
 
-      <View className='flex w-full items-center absolute bottom-7'>
+      <View className='flex w-full items-center absolute bottom-0'>
         <Text className='font-bold font-archivo'>&copy; 2024 list. todos os direitos reservados</Text>
       </View>
 
