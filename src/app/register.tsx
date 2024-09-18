@@ -3,25 +3,25 @@ import React, { useState } from 'react';
 import { Text, TextInput, View, TouchableOpacity } from 'react-native';
 import { FontAwesome, Entypo } from '@expo/vector-icons';
 import { Link } from 'expo-router';
+import { useRegisterUser } from '../database/auth';
 
-export default function Login() {
-  
+export default function Register() {
+
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  
-  const getLogin = async () => {
-    if (username === '' || password === '') {
-      alert('Preencha todos os campos!');
-      return;
-    }
 
-    if (username.length > 5 && password.length > 5) {
-      alert('Usuário e senha corretos');
-    } else {
-      alert('Usuário ou senha precisa ser maior que 5 caracteres');
+  const registerUser = useRegisterUser();
+
+  async function register() {
+    try {
+      const response = await registerUser.register({ username, password });
+      alert('usuário cadastrado com sucesso!');
+      console.log('Response: ', response.username);
+    } catch (error) {
+      console.log('Error: ', error);
     }
-  };
+  }
 
   return (
     <View className='flex-1 items-center'>
@@ -55,8 +55,8 @@ export default function Login() {
             onChangeText={setPassword}
           />
 
-          <TouchableOpacity 
-            activeOpacity={1} 
+          <TouchableOpacity
+            activeOpacity={1}
             className='flex items-left justify-center w-8 h-12 border-b-4 border-r-4 border-t-2 rounded-sm rounded-l-none'
             onPress={() => setShowPassword(!showPassword)}
           >
@@ -66,7 +66,7 @@ export default function Login() {
 
         <TouchableOpacity
           className='flex justify-center items-center border-2 border-r-4 border-b-4 h-12 w-80 p-2 rounded-sm shadow-shape'
-          onPress={getLogin}
+          onPress={register}
         >
           <Text className='text-xl font-bold font-archivo'>cadastrar-se</Text>
         </TouchableOpacity>
@@ -74,11 +74,11 @@ export default function Login() {
 
       <View className='flex flex-row justify-center w-full h-6 mt-5'>
         <Text className='text-base font-bold font-archivo'>já tem conta? </Text>
-          <TouchableOpacity activeOpacity={1}>
-            <Link className='text-base font-bold font-archivo underline' href={"/"}>
-              faça o login!
-            </Link>
-          </TouchableOpacity>
+        <TouchableOpacity activeOpacity={1}>
+          <Link className='text-base font-bold font-archivo underline' href={"/"}>
+            faça o login!
+          </Link>
+        </TouchableOpacity>
       </View>
 
       <View className='flex w-full items-center absolute bottom-0'>

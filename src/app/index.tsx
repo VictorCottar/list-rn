@@ -1,11 +1,26 @@
 import { StatusBar } from 'expo-status-bar';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useFonts } from 'expo-font';
 import { Text, TextInput, View, TouchableOpacity } from 'react-native';
 import { FontAwesome, Entypo } from '@expo/vector-icons';
-import { Link } from 'expo-router';
+import { Link, SplashScreen } from 'expo-router';
 
 export default function Login() {
   
+  const [loaded, error] = useFonts({
+    'archivo': require('../assets/fonts/Archivo-VariableFont_wdth,wght.ttf'),
+  });
+
+  useEffect(() => {
+    if (loaded || error) {
+      SplashScreen.hideAsync();
+    }
+  }, [loaded, error]);
+
+  if (!loaded && !error) {
+    return null;
+  }
+
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
