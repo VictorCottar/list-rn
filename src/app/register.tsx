@@ -2,7 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
 import { Text, TextInput, View, TouchableOpacity } from 'react-native';
 import { FontAwesome, Entypo } from '@expo/vector-icons';
-import { Link } from 'expo-router';
+import { Link, router } from 'expo-router';
 import { useRegisterUser } from '../database/auth';
 
 export default function Register() {
@@ -16,10 +16,11 @@ export default function Register() {
   async function register() {
     try {
       const response = await registerUser.register({ username, password });
-      alert('usuário cadastrado com sucesso!');
-      console.log('Response: ', response.username);
+      alert('usuário cadastrado com sucesso! volte e faça seu login.');
+      router.push('/');
+
     } catch (error) {
-      console.log('Error: ', error);
+      alert(error);
     }
   }
 

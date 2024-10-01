@@ -3,7 +3,8 @@ import React, { useEffect, useState } from 'react';
 import { useFonts } from 'expo-font';
 import { Text, TextInput, View, TouchableOpacity } from 'react-native';
 import { FontAwesome, Entypo } from '@expo/vector-icons';
-import { Link, SplashScreen } from 'expo-router';
+import { Link, SplashScreen, router } from 'expo-router';
+import { useLoginUser } from '../database/auth';
 
 export default function Login() {
   
@@ -17,26 +18,26 @@ export default function Login() {
     }
   }, [loaded, error]);
 
-  if (!loaded && !error) {
-    return null;
-  }
-
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  
-  const getLogin = async () => {
-    if (username === '' || password === '') {
-      alert('Preencha todos os campos!');
-      return;
-    }
 
-    if (username.length > 5 && password.length > 5) {
-      alert('Usuário e senha corretos');
-    } else {
-      alert('Usuário ou senha precisa ser maior que 5 caracteres');
+  const loginUser = useLoginUser();
+
+  async function login() {
+    try {
+      const response = await loginUser.login({ username, password });
+      if (response) {
+        router.push('/todo');
+      }
+    } catch (error) {
+      alert(error);
     }
-  };
+  }
+
+  if (!loaded && !error) {
+    return null;
+  }
 
   return (
     <View className='flex-1 items-center'>
@@ -80,7 +81,7 @@ export default function Login() {
 
         <TouchableOpacity
           className='flex justify-center items-center border-2 border-r-4 border-b-4 h-12 w-80 p-2 rounded-sm shadow-shape'
-          onPress={getLogin}
+          onPress={login}
         >
           <Text className='text-xl font-bold font-archivo'>entrar</Text>
         </TouchableOpacity>

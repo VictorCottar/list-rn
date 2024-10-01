@@ -26,3 +26,26 @@ export function useRegisterUser() {
 
   return { register }
 }
+
+export function useLoginUser() {
+  const database = useSQLiteContext();
+
+  async function login(user: User) {
+    try {
+      const firstRow = await database.getFirstAsync(
+        "SELECT * FROM Users WHERE username = ? AND password = ?",
+        [user.username, user.password]
+      );
+      
+      if (firstRow) {
+        return firstRow;
+      } else {
+        throw new Error('Usuário ou senha incorretos');
+      }
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  return { login };
+}
