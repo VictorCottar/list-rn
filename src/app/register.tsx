@@ -27,7 +27,7 @@ export default function Register() {
   return (
     <View className='flex-1 items-center'>
 
-      <View className='flex justify-end items-center w-full h-24'>
+      <View className='flex justify-end items-center w-full h-28'>
         <Text className='text-5xl font-bold font-archivo'>list</Text>
       </View>
 
@@ -82,7 +82,7 @@ export default function Register() {
         </TouchableOpacity>
       </View>
 
-      <View className='flex w-full items-center absolute bottom-0'>
+      <View className='flex w-full items-center absolute bottom-4'>
         <Text className='font-bold font-archivo'>&copy; 2024 list. todos os direitos reservados</Text>
       </View>
 

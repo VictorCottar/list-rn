@@ -28,7 +28,7 @@ export default function Login() {
     try {
       const response = await loginUser.login({ username, password });
       if (response) {
-        router.push('/todo');
+        router.push({ pathname: '/todo', params: { username } });
       }
     } catch (error) {
       alert(error);
@@ -42,7 +42,7 @@ export default function Login() {
   return (
     <View className='flex-1 items-center'>
 
-      <View className='flex justify-end items-center w-full h-24'>
+      <View className='flex justify-end items-center w-full h-28'>
         <Text className='text-5xl font-bold font-archivo'>list</Text>
       </View>
 
@@ -90,13 +90,15 @@ export default function Login() {
       <View className='flex flex-row justify-center w-full h-6 mt-5'>
         <Text className='text-base font-bold font-archivo'>não tem conta? </Text>
         <TouchableOpacity activeOpacity={1}>
-            <Link className='text-base font-bold font-archivo underline' href={"/register"}>
-              crie agora!
-            </Link>
+            <Text>
+              <Link className='text-base font-bold font-archivo underline' href={"/register"}>
+                crie agora!
+              </Link>
+            </Text>
           </TouchableOpacity>
       </View>
 
-      <View className='flex w-full items-center absolute bottom-0'>
+      <View className='flex w-full items-center absolute bottom-4'>
         <Text className='font-bold font-archivo'>&copy; 2024 list. todos os direitos reservados</Text>
       </View>
 
