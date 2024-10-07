@@ -1,8 +1,8 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useState } from 'react';
 import { useFonts } from 'expo-font';
-import { Text, TextInput, View, TouchableOpacity } from 'react-native';
-import { FontAwesome, Entypo } from '@expo/vector-icons';
+import { Text, View, TouchableOpacity } from 'react-native';
+import { FontAwesome } from '@expo/vector-icons';
 import { Link, SplashScreen, router } from 'expo-router';
 import { useLoginUser } from '../database/auth';
 import { Footer } from '../components/footer';
@@ -43,13 +43,13 @@ export default function Login() {
   }
 
   return (
-    <View className='flex-1 items-center'>
+    <View className='flex-1 items-center font-archivo'>
 
       <Header />
 
       <View className='flex justify-center items-center w-full h-40'>
         <FontAwesome name='check-square' size={80} />
-        <Text className='text-2xl font-bold font-archivo'>bem-vindo de volta!</Text>
+        <Text className='text-2xl font-bold'>bem-vindo de volta!</Text>
       </View>
 
       <TextInputField
@@ -76,14 +76,14 @@ export default function Login() {
         className='flex justify-center items-center border-2 border-r-4 border-b-4 h-12 mt-2 w-80 p-2 rounded-sm shadow-shape'
         onPress={login}
         >
-        <Text className='text-xl font-bold font-archivo'>entrar</Text>
+        <Text className='text-xl font-bold'>entrar</Text>
       </TouchableOpacity>
 
       <View className='flex flex-row justify-center w-full h-6 mt-5'>
-        <Text className='text-base font-bold font-archivo'>não tem conta? </Text>
+        <Text className='text-base font-bold'>não tem conta? </Text>
         <TouchableOpacity activeOpacity={1}>
           <Text>
-            <Link className='text-base font-bold font-archivo underline' href={"/register"}>
+            <Link className='text-base font-bold underline' href={"/register"}>
               crie agora!
             </Link>
           </Text>
