@@ -3,6 +3,7 @@ import { useLocalSearchParams } from 'expo-router';
 import { FooterTodo } from "../components/footerTodo";
 import { useState } from "react";
 import Ionicons from '@expo/vector-icons/Ionicons';
+import { Dropdown } from 'react-native-element-dropdown';
 
 export default function Todo() {
   const { username } = useLocalSearchParams();
@@ -10,21 +11,30 @@ export default function Todo() {
   type Task = {
     title: string;
     description: string;
+    priority: string;
   };
 
   const [tasks, setTasks] = useState<Task[]>([]);
   const [isModalVisible, setModalVisible] = useState(false);
   const [newTaskTitle, setNewTaskTitle] = useState('');
   const [newTaskDescription, setNewTaskDescription] = useState('');
+  const [priority, setPriority] = useState('');
   const [selectedTask, setSelectedTask] = useState<Task | null>(null);
 
+  const priorityOptions = [
+    { label: 'alta', value: 'alta' },
+    { label: 'média', value: 'média' },
+    { label: 'baixa', value: 'baixa' },
+  ];
+
   const handleAddTask = () => {
-    if (newTaskTitle != '' && newTaskDescription != '') {
-      const newTask = { title: newTaskTitle, description: newTaskDescription };
+    if (newTaskTitle != '' && newTaskDescription != '' && priority != '') {
+      const newTask = { title: newTaskTitle, description: newTaskDescription, priority };
       setTasks([...tasks, newTask]);
       setModalVisible(false);
       setNewTaskTitle('');
       setNewTaskDescription('');
+      setPriority('média');
     } else {
       alert("você precisa preencher todos os campos");
     }
@@ -38,8 +48,8 @@ export default function Todo() {
     }
   };
 
-  function handleTaskPress(item: { title: string; description: string; }) {
-    throw new Error("Function not implemented.");
+  function handleTaskPress(item: { title: string; description: string; priority: string; }) {
+    setSelectedTask(item);
   }
 
   return (
@@ -64,24 +74,23 @@ export default function Todo() {
               onPress={() => handleTaskPress(item)}
             >
               <Text className="text-lg font-medium ml-3" numberOfLines={1} ellipsizeMode="tail">
-                {item.title}
+                {item.title} - {item.priority}
               </Text>
             </TouchableOpacity>
 
           )}
-          style={{ width: '93%', marginLeft: 2}}
+          style={{ width: '93%', marginLeft: 2 }}
         />
 
-          {/* corrigido estilização ao adicionar tarefa(não commitei, ao voltar é melhor commitar para n perder a alteração), proximo passo é estilização do modal de criar a tarefa*/}
 
         <Modal visible={isModalVisible} transparent={true} animationType="slide">
           <View className="flex-1 justify-center items-center bg-neutral-50">
-          
+
             <TouchableOpacity
               className="absolute top-14 right-5 p-2 rounded-full"
               onPress={() => setModalVisible(false)}>
-                <Ionicons name="close" size={32} color="black" />
-              </TouchableOpacity>
+              <Ionicons name="close" size={32} color="black" />
+            </TouchableOpacity>
 
             <View className="w-10/12 h-2/4 bg-white p-5 border-2 border-r-4 border-b-4 rounded-sm space-y-2">
               <Text className="text-2xl font-semibold">título da tarefa</Text>
@@ -94,13 +103,28 @@ export default function Todo() {
               <Text className="text-2xl font-semibold">descrição da tarefa</Text>
               <TextInput
                 placeholder="descrição da tarefa"
-                className='border-2 border-r-4 border-b-4 h-24 w-70 p-2 rounded-sm shadow-shape'
+                className='border-2 border-r-4 border-b-4 h-20 w-70 p-2 rounded-sm shadow-shape'
                 value={newTaskDescription}
                 onChangeText={setNewTaskDescription}
-                multiline
+                numberOfLines={3}
+                
               />
+
+              <Text className="text-2xl font-semibold">prioridade</Text>
+              <View className="flex justify-center items-center">
+              <Dropdown
+                  className="w-full border-2 border-r-4 border-b-4 h-12 p-2 rounded-sm shadow-shape"
+                  data={priorityOptions}
+                  labelField="label"
+                  valueField="value"
+                  placeholder="selecione a prioridade"
+                  value={priority}
+                  onChange={item => setPriority(item.value)}
+                />
+              </View>
+
               <TouchableOpacity
-                className='flex justify-center items-center border-2 border-r-4 border-b-4 h-12 w-70 mt-2 p-2 rounded-sm shadow-shape'
+                className='flex justify-center items-center border-2 border-r-4 border-b-4 h-12 w-70 mt-4 p-2 rounded-sm shadow-shape'
                 onPress={handleAddTask}
               >
                 <Text className="text-base font-bold">salvar tarefa</Text>
