@@ -29,7 +29,6 @@ export function useRegisterUser() {
 
 export function useLoginUser() {
   const database = useSQLiteContext();
-
   async function login(user: User) {
     try {
       const firstRow = await database.getFirstAsync(
@@ -46,6 +45,5 @@ export function useLoginUser() {
       throw error;
     }
   }
-
   return { login };
 }

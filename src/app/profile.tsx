@@ -27,11 +27,11 @@ export default function Profile() {
       </View>
 
       <TouchableOpacity
-          className='flex justify-center items-center border-2 border-r-4 border-b-4 h-12 w-11/12 p-2 rounded-sm shadow-shape mt-12'
-          onPress={() => router.push('/')}
-        >
-          <Text className='text-xl font-medium '>logout</Text>
-        </TouchableOpacity>
+        className='flex justify-center items-center border-2 border-r-4 border-b-4 h-12 w-11/12 p-2 rounded-sm shadow-shape mt-12'
+        onPress={() => router.push('/')}
+      >
+        <Text className='text-xl font-medium '>logout</Text>
+      </TouchableOpacity>
 
     </View>
   )
