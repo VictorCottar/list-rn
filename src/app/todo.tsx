@@ -1,9 +1,10 @@
 import { View, Text, TouchableOpacity, FlatList, TextInput, Modal } from "react-native";
 import { useLocalSearchParams } from 'expo-router';
-import { FooterTodo } from "../components/footerTodo";
+import { FooterTodo } from "../components/footers/footerTodo";
 import { useState } from "react";
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { Dropdown } from 'react-native-element-dropdown';
+import { HeaderTodo } from "../components/headers/headerTodo";
 
 export default function Todo() {
   const { username } = useLocalSearchParams();
@@ -55,13 +56,7 @@ export default function Todo() {
   return (
     <View className='flex-1 items-center font-archivo'>
 
-      <View className='flex justify-end items-start w-full h-24 border-b-2 bg-black'>
-        <Text className='text-3xl font-semibold text-white ml-5'>olá, {username}</Text>
-      </View>
-
-      <View className="flex justify-end items-center w-full h-12 mt-3">
-        <Text className="text-xl font-semibold">qual o plano para hoje?</Text>
-      </View>
+      <HeaderTodo username={username as string} />
 
       <View className="flex justify-center items-center w-full h-2/3 mt-8 space-y-4">
 
@@ -84,15 +79,16 @@ export default function Todo() {
 
 
         <Modal visible={isModalVisible} transparent={true} animationType="slide">
-          <View className="flex-1 justify-center items-center bg-neutral-50">
-
+          <View className='flex flex-row justify-between items-end w-full h-24 border-b-2 bg-black'>
+            <Text className="text-3xl font-semibold text-white left-24">adicionar tarefa</Text>
             <TouchableOpacity
               className="absolute top-14 right-5 p-2 rounded-full"
               onPress={() => setModalVisible(false)}>
-              <Ionicons name="close" size={32} color="black" />
+              <Ionicons name="close" size={32} color="white" />
             </TouchableOpacity>
-
-            <View className="w-10/12 h-2/4 bg-white p-5 border-2 border-r-4 border-b-4 rounded-sm space-y-2">
+          </View>
+          <View className="flex-1 justify-center items-center bg-white">
+            <View className="w-10/12 bg-white p-5 border-2 border-r-4 border-b-4 rounded-sm space-y-2 mb-24">
               <Text className="text-2xl font-semibold">título da tarefa</Text>
               <TextInput
                 placeholder="título da tarefa"
@@ -107,12 +103,12 @@ export default function Todo() {
                 value={newTaskDescription}
                 onChangeText={setNewTaskDescription}
                 numberOfLines={3}
-                
+
               />
 
               <Text className="text-2xl font-semibold">prioridade</Text>
               <View className="flex justify-center items-center">
-              <Dropdown
+                <Dropdown
                   className="w-full border-2 border-r-4 border-b-4 h-12 p-2 rounded-sm shadow-shape"
                   data={priorityOptions}
                   labelField="label"

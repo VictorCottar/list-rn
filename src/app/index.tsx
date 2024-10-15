@@ -1,13 +1,15 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useState } from 'react';
 import { useFonts } from 'expo-font';
-import { Text, View, TouchableOpacity } from 'react-native';
+import { Text, View } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
-import { Link, SplashScreen, router } from 'expo-router';
+import { SplashScreen, router } from 'expo-router';
 import { useLoginUser } from '../database/auth';
-import { Footer } from '../components/footer';
-import { Header } from '../components/header'
+import { Footer } from '../components/footers/footer';
+import { Header } from '../components/headers/header'
 import { TextInputField } from '../components/textInput';
+import { ButtonAcess } from '../components/buttonAcess'
+import { AuthLink } from '../components/authLink';
 
 export default function Login() {
 
@@ -72,23 +74,9 @@ export default function Login() {
         />
       </View>
 
-      <TouchableOpacity
-        className='flex justify-center items-center border-2 border-r-4 border-b-4 h-12 mt-2 w-80 p-2 rounded-sm shadow-shape'
-        onPress={login}
-        >
-        <Text className='text-xl font-bold'>entrar</Text>
-      </TouchableOpacity>
+      <ButtonAcess text='entrar' onPress={login} />
 
-      <View className='flex flex-row justify-center w-full h-6 mt-5'>
-        <Text className='text-base font-bold'>não tem conta? </Text>
-        <TouchableOpacity activeOpacity={1}>
-          <Text>
-            <Link className='text-base font-bold underline' href={"/register"}>
-              crie agora!
-            </Link>
-          </Text>
-        </TouchableOpacity>
-      </View>
+      <AuthLink text='não tem conta? ' linkText='crie agora!' href={'/register'} />
 
       <Footer />
 

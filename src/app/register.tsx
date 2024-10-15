@@ -1,12 +1,14 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
-import { Text, View, TouchableOpacity } from 'react-native';
+import { Text, View } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
-import { Link, router } from 'expo-router';
+import { router } from 'expo-router';
 import { useRegisterUser } from '../database/auth';
-import { Footer } from '../components/footer';
+import { Footer } from '../components/footers/footer';
 import { TextInputField } from '../components/textInput'
-import { Header } from '../components/header'
+import { Header } from '../components/headers/header'
+import { ButtonAcess } from '../components/buttonAcess'
+import { AuthLink } from '../components/authLink';
 
 export default function Register() {
 
@@ -58,21 +60,9 @@ export default function Register() {
         />
       </View>
 
-      <TouchableOpacity
-        className='flex justify-center items-center border-2 border-r-4 border-b-4 h-12 w-80 mt-2 p-2 rounded-sm shadow-shape'
-        onPress={register}
-        >
-        <Text className='text-xl font-bold font-archivo'>cadastrar-se</Text>
-      </TouchableOpacity>
+      <ButtonAcess text='criar conta' onPress={register} />
 
-      <View className='flex flex-row justify-center w-full h-6 mt-5'>
-        <Text className='text-base font-bold font-archivo'>já tem conta? </Text>
-        <TouchableOpacity activeOpacity={1}>
-          <Link className='text-base font-bold font-archivo underline' href={"/"}>
-            faça o login!
-          </Link>
-        </TouchableOpacity>
-      </View>
+      <AuthLink text='já tem conta? ' linkText='faça o login!' href={'/'} />
 
       <Footer />
 
