@@ -87,6 +87,7 @@ export default function Todo() {
               <Ionicons name="close" size={32} color="white" />
             </TouchableOpacity>
           </View>
+
           <View className="flex-1 justify-center items-center bg-white">
             <View className="w-10/12 bg-white p-5 border-2 border-r-4 border-b-4 rounded-sm space-y-2 mb-24">
               <Text className="text-2xl font-semibold">título da tarefa</Text>
@@ -130,24 +131,41 @@ export default function Todo() {
         </Modal>
 
         <Modal visible={!!selectedTask} transparent={true} animationType="slide">
-          <View className="flex-1 justify-center items-center bg-black bg-opacity-50">
-            <View className="w-10/12 bg-white p-5 rounded-lg">
-              <Text className="text-2xl font-semibold">{selectedTask?.title}</Text>
-              <Text className="text-lg mt-2">{selectedTask?.description}</Text>
-              <TouchableOpacity
-                className="bg-green-500 p-3 rounded mt-5"
-                onPress={handleCompleteTask}
-              >
-                <Text className="text-white text-center">Concluir Tarefa</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                className="bg-red-500 p-3 rounded mt-3"
-                onPress={() => setSelectedTask(null)}
-              >
-                <Text className="text-white text-center">Fechar</Text>
-              </TouchableOpacity>
-            </View>
+
+          <View className='flex flex-row justify-center items-end w-full h-24 border-b-2 bg-black'>
+            <Text className="text-3xl font-semibold text-white">detalhes da tarefa</Text>
           </View>
+
+          <View className="flex-1 justify-center items-center bg-white">
+
+
+            <View className="flex flex-col justify-between w-10/12 h-1/2 bg-white p-5 border-2 border-r-4 border-b-4 rounded-sm space-y-2 mb-24">
+
+              <View className="flex flex-col space-y-2">
+                <Text className="text-2xl font-semibold">{selectedTask?.title}</Text>
+                <Text className="text-lg mt-2">{selectedTask?.description}</Text>
+                <Text className="text-lg mt-2">prioridade da tarefa: {selectedTask?.priority}</Text>
+              </View>
+
+              <View className="flex flex-col space-y-6 mt-14">
+                <TouchableOpacity
+                  className='flex justify-center items-center border-2 border-r-4 border-b-4 h-12 w-70 mt-4 p-2 rounded-sm shadow-shape'
+                  onPress={handleCompleteTask}
+                >
+                  <Text className="text-base font-bold">concluir tarefa</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  className='flex justify-center items-center border-2 border-r-4 border-b-4 h-12 w-70 mt-4 p-2 rounded-sm shadow-shape'
+                  onPress={() => setSelectedTask(null)}
+                >
+                  <Text className="text-base font-bold">voltar</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+
+          </View>
+
         </Modal>
 
       </View>

@@ -13,7 +13,7 @@ export default function Task() {
 
         <View className="flex flex-row justify-between items-end  ml-10 w-60">
           <TouchableOpacity
-            className="flex justify-center items-start h-16 w-16 top-4 right-3"
+            className="flex justify-center items-start h-16 w-16 top-4 right-5"
             onPress={() => router.push({ pathname: '/todo', params: { username } })}
           >
             <AntDesign name="back" size={24} color="white" />
