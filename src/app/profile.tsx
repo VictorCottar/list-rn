@@ -17,20 +17,20 @@ export default function Profile() {
           >
             <AntDesign name="back" size={24} color="white" />
           </TouchableOpacity>
-          <Text className='text-3xl font-semibold text-white ml-1'>perfil do {username}</Text>
+          <Text className='text-3xl font-medium text-white ml-1'>perfil do {username}</Text>
         </View>
       </View>
 
       <View className="flex justify-center items-center w-11/12 h-32 p-2 border-2 border-b-4 border-r-4 mt-10 rounded-sm shadow-shape">
-        <Text className="text-2xl font-medium ">parabéns!</Text>
-        <Text className="text-xl font-medium ">você já concluiu x tarefas</Text>
+        <Text className="text-2xl font-medium">parabéns!</Text>
+        <Text className="text-xl font-medium underline">você já concluiu x tarefas</Text>
       </View>
 
       <TouchableOpacity
         className='flex justify-center items-center border-2 border-r-4 border-b-4 h-12 w-11/12 p-2 rounded-sm shadow-shape mt-12'
         onPress={() => router.push('/')}
       >
-        <Text className='text-xl font-medium '>logout</Text>
+        <Text className='text-xl font-medium'>logout</Text>
       </TouchableOpacity>
 
     </View>

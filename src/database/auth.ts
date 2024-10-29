@@ -45,5 +45,6 @@ export function useLoginUser() {
       throw error;
     }
   }
+
   return { login };
 }

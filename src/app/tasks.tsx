@@ -18,7 +18,7 @@ export default function Task() {
           >
             <AntDesign name="back" size={24} color="white" />
           </TouchableOpacity>
-          <Text className='text-3xl font-semibold text-white right-11'>tarefas</Text>
+          <Text className='text-3xl font-medium text-white right-11'>tarefas</Text>
 
         </View>
       </View>

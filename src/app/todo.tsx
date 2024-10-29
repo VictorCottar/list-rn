@@ -5,14 +5,18 @@ import { useState } from "react";
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { Dropdown } from 'react-native-element-dropdown';
 import { HeaderTodo } from "../components/headers/headerTodo";
+import { useTask } from "../database/tasks";
 
 export default function Todo() {
   const { username } = useLocalSearchParams();
+  const { addTask, setCompletedTask } = useTask();
 
   type Task = {
+    id: number;
     title: string;
     description: string;
-    priority: string;
+    priority: number;
+    completed: boolean;
   };
 
   const [tasks, setTasks] = useState<Task[]>([]);
@@ -23,34 +27,55 @@ export default function Todo() {
   const [selectedTask, setSelectedTask] = useState<Task | null>(null);
 
   const priorityOptions = [
-    { label: 'alta', value: 'alta' },
-    { label: 'média', value: 'média' },
-    { label: 'baixa', value: 'baixa' },
+    { label: 'alta', value: '3' },
+    { label: 'média', value: '2' },
+    { label: 'baixa', value: '1' },
   ];
 
-  const handleAddTask = () => {
-    if (newTaskTitle != '' && newTaskDescription != '' && priority != '') {
-      const newTask = { title: newTaskTitle, description: newTaskDescription, priority };
-      setTasks([...tasks, newTask]);
-      setModalVisible(false);
-      setNewTaskTitle('');
-      setNewTaskDescription('');
-      setPriority('média');
+  const handleAddTask = async () => {
+    if (newTaskTitle !== '' && newTaskDescription !== '' && priority !== '') {
+      const newTask: Task = {  
+        id: tasks.length + 1,  // supondo um id incremental temporário
+        title: newTaskTitle,
+        description: newTaskDescription,
+        priority: parseInt(priority),  // converte para número
+        completed: false
+      };
+      
+      try {
+        await addTask(newTask); 
+        setTasks([...tasks, newTask]); 
+        setModalVisible(false);
+        setNewTaskTitle('');
+        setNewTaskDescription('');
+        setPriority('');
+      } catch (error) {
+        console.error("erro ao adicionar tarefa:", error);
+        alert("erro ao salvar a tarefa.");
+      }
     } else {
       alert("você precisa preencher todos os campos");
     }
   };
 
-  const handleCompleteTask = () => {
+  const handleCompleteTask = async () => {
     if (selectedTask) {
-      const updatedTasks = tasks.filter(task => task !== selectedTask);
-      setTasks(updatedTasks);
-      setSelectedTask(null);
+      try {
+        await setCompletedTask(selectedTask.id);  // passa o ID da tarefa
+        const updatedTasks = tasks.map(task =>
+          task.id === selectedTask.id ? { ...task, completed: true } : task
+        );
+        setTasks(updatedTasks);
+        setSelectedTask(null);
+      } catch (error) {
+        console.error("erro ao concluir tarefa:", error);
+        alert("erro ao concluir a tarefa.");
+      }
     }
   };
 
-  function handleTaskPress(item: { title: string; description: string; priority: string; }) {
-    setSelectedTask(item);
+  function handleTaskPress(task: Task) {
+    setSelectedTask(task);
   }
 
   return (
@@ -80,7 +105,7 @@ export default function Todo() {
 
         <Modal visible={isModalVisible} transparent={true} animationType="slide">
           <View className='flex flex-row justify-between items-end w-full h-24 border-b-2 bg-black'>
-            <Text className="text-3xl font-semibold text-white left-24">adicionar tarefa</Text>
+            <Text className="text-3xl font-medium text-white left-24">adicionar tarefa</Text>
             <TouchableOpacity
               className="absolute top-14 right-5 p-2 rounded-full"
               onPress={() => setModalVisible(false)}>
@@ -90,14 +115,14 @@ export default function Todo() {
 
           <View className="flex-1 justify-center items-center bg-white">
             <View className="w-10/12 bg-white p-5 border-2 border-r-4 border-b-4 rounded-sm space-y-2 mb-24">
-              <Text className="text-2xl font-semibold">título da tarefa</Text>
+              <Text className="text-2xl font-medium">título da tarefa</Text>
               <TextInput
                 placeholder="título da tarefa"
                 className='border-2 border-r-4 border-b-4 h-12 w-70 p-2 rounded-sm shadow-shape'
                 value={newTaskTitle}
                 onChangeText={setNewTaskTitle}
               />
-              <Text className="text-2xl font-semibold">descrição da tarefa</Text>
+              <Text className="text-2xl font-medium">descrição da tarefa</Text>
               <TextInput
                 placeholder="descrição da tarefa"
                 className='border-2 border-r-4 border-b-4 h-20 w-70 p-2 rounded-sm shadow-shape'
@@ -107,7 +132,7 @@ export default function Todo() {
 
               />
 
-              <Text className="text-2xl font-semibold">prioridade</Text>
+              <Text className="text-2xl font-medium">prioridade</Text>
               <View className="flex justify-center items-center">
                 <Dropdown
                   className="w-full border-2 border-r-4 border-b-4 h-12 p-2 rounded-sm shadow-shape"
@@ -124,7 +149,7 @@ export default function Todo() {
                 className='flex justify-center items-center border-2 border-r-4 border-b-4 h-12 w-70 mt-4 p-2 rounded-sm shadow-shape'
                 onPress={handleAddTask}
               >
-                <Text className="text-base font-bold">salvar tarefa</Text>
+                <Text className="text-base font-medium">salvar tarefa</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -133,7 +158,7 @@ export default function Todo() {
         <Modal visible={!!selectedTask} transparent={true} animationType="slide">
 
           <View className='flex flex-row justify-center items-end w-full h-24 border-b-2 bg-black'>
-            <Text className="text-3xl font-semibold text-white">detalhes da tarefa</Text>
+            <Text className="text-3xl font-medium text-white">detalhes da tarefa</Text>
           </View>
 
           <View className="flex-1 justify-center items-center bg-white">
@@ -141,10 +166,10 @@ export default function Todo() {
 
             <View className="flex flex-col justify-between w-10/12 h-1/2 bg-white p-5 border-2 border-r-4 border-b-4 rounded-sm space-y-2 mb-24">
 
-              <View className="flex flex-col space-y-2">
-                <Text className="text-2xl font-semibold">{selectedTask?.title}</Text>
-                <Text className="text-lg mt-2">{selectedTask?.description}</Text>
-                <Text className="text-lg mt-2">prioridade da tarefa: {selectedTask?.priority}</Text>
+              <View className="flex flex-col space-y-3">
+                <Text className="text-2xl font-semibold text-center underline">{selectedTask?.title}</Text>
+                <Text className="text-base mt-2">{selectedTask?.description}</Text>
+                <Text className="text-base mt-2">prioridade da tarefa: {selectedTask?.priority}</Text>
               </View>
 
               <View className="flex flex-col space-y-6 mt-14">
@@ -152,14 +177,14 @@ export default function Todo() {
                   className='flex justify-center items-center border-2 border-r-4 border-b-4 h-12 w-70 mt-4 p-2 rounded-sm shadow-shape'
                   onPress={handleCompleteTask}
                 >
-                  <Text className="text-base font-bold">concluir tarefa</Text>
+                  <Text className="text-base font-medium">concluir tarefa</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
                   className='flex justify-center items-center border-2 border-r-4 border-b-4 h-12 w-70 mt-4 p-2 rounded-sm shadow-shape'
                   onPress={() => setSelectedTask(null)}
                 >
-                  <Text className="text-base font-bold">voltar</Text>
+                  <Text className="text-base font-medium">voltar</Text>
                 </TouchableOpacity>
               </View>
             </View>
