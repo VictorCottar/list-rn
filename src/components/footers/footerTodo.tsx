@@ -15,7 +15,7 @@ export function FooterTodo({ setModalVisible }: FooterTodoProps) {
       <View className="flex flex-row justify-around items-start">
         <TouchableOpacity
           className="flex justify-center items-center h-16 w-16"
-          onPress={() => router.push({ pathname: '/tasks', params: { username } })}
+          onPress={() => router.push({ pathname: '/tasksCompleted', params: { username } })}
         >
           <FontAwesome5 name="list" size={24} color="white" />
         </TouchableOpacity>

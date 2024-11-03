@@ -1,4 +1,5 @@
 import { View, Text, TouchableOpacity, FlatList, TextInput, Modal } from "react-native";
+import { useEffect } from "react";
 import { useLocalSearchParams } from 'expo-router';
 import { FooterTodo } from "../components/footers/footerTodo";
 import { useState } from "react";
@@ -9,13 +10,13 @@ import { useTask } from "../database/tasks";
 
 export default function Todo() {
   const { username } = useLocalSearchParams();
-  const { addTask, setCompletedTask } = useTask();
+  const { addTask, setCompletedTask, getAllTasks } = useTask();
 
   type Task = {
     id: number;
     title: string;
     description: string;
-    priority: number;
+    priority: string;
     completed: boolean;
   };
 
@@ -27,24 +28,24 @@ export default function Todo() {
   const [selectedTask, setSelectedTask] = useState<Task | null>(null);
 
   const priorityOptions = [
-    { label: 'alta', value: '3' },
-    { label: 'média', value: '2' },
-    { label: 'baixa', value: '1' },
+    { label: 'alta', value: 'alta' },
+    { label: 'média', value: 'média' },
+    { label: 'baixa', value: 'baixa' },
   ];
 
   const handleAddTask = async () => {
     if (newTaskTitle !== '' && newTaskDescription !== '' && priority !== '') {
-      const newTask: Task = {  
-        id: tasks.length + 1,  // supondo um id incremental temporário
+      const newTask: Task = {
+        id: tasks.length + 1,
         title: newTaskTitle,
         description: newTaskDescription,
-        priority: parseInt(priority),  // converte para número
+        priority: (priority),
         completed: false
       };
-      
+
       try {
-        await addTask(newTask); 
-        setTasks([...tasks, newTask]); 
+        await addTask(newTask);
+        setTasks([...tasks, newTask]);
         setModalVisible(false);
         setNewTaskTitle('');
         setNewTaskDescription('');
@@ -61,7 +62,7 @@ export default function Todo() {
   const handleCompleteTask = async () => {
     if (selectedTask) {
       try {
-        await setCompletedTask(selectedTask.id);  // passa o ID da tarefa
+        await setCompletedTask(selectedTask.id);
         const updatedTasks = tasks.map(task =>
           task.id === selectedTask.id ? { ...task, completed: true } : task
         );
@@ -77,6 +78,19 @@ export default function Todo() {
   function handleTaskPress(task: Task) {
     setSelectedTask(task);
   }
+
+  useEffect(() => {
+    const loadTasks = async () => {
+      try {
+        const savedTasks = await getAllTasks();
+        setTasks(savedTasks);  // Atualiza o estado com as tarefas recuperadas
+      } catch (error) {
+        console.error("erro ao carregar tarefas:", error);
+      }
+    };
+    loadTasks();
+  }, []);
+
 
   return (
     <View className='flex-1 items-center font-archivo'>

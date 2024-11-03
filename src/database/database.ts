@@ -14,7 +14,7 @@ export async function setupDatabase(database: SQLiteDatabase) {
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       title TEXT NOT NULL,
       description TEXT,
-      priority INTEGER NOT NULL,
+      priority STRING NOT NULL,
       completed BOOLEAN NOT NULL DEFAULT 0
     );
   `);

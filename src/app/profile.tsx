@@ -1,9 +1,26 @@
 import { router, useLocalSearchParams } from "expo-router"
 import { Text, TouchableOpacity, View } from "react-native"
 import AntDesign from '@expo/vector-icons/AntDesign';
+import {  useState, useEffect } from "react";
+import { useTask } from "../database/tasks";
 
 export default function Profile() {
   const { username } = useLocalSearchParams();
+  const [completedTasks, setCompletedTasks] = useState<number>(0);
+  const { countTasksCompleted } = useTask();
+
+  useEffect(() => {
+    const fetchCompletedTasks = async () => {
+      try {
+        const count = await countTasksCompleted();
+        setCompletedTasks(count); // Atualiza o estado com o número de tarefas concluídas
+      } catch (error) {
+        console.error('erro ao contar tarefas concluídas:', error);
+      }
+    };
+
+    fetchCompletedTasks(); // Chama a função ao montar o componente
+  }, [countTasksCompleted]);
 
   return (
 
@@ -23,7 +40,7 @@ export default function Profile() {
 
       <View className="flex justify-center items-center w-11/12 h-32 p-2 border-2 border-b-4 border-r-4 mt-10 rounded-sm shadow-shape">
         <Text className="text-2xl font-medium">parabéns!</Text>
-        <Text className="text-xl font-medium underline">você já concluiu x tarefas</Text>
+        <Text className="text-xl font-medium underline">você já concluiu {completedTasks} tarefas</Text>
       </View>
 
       <TouchableOpacity
