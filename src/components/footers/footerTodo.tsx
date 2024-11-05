@@ -17,7 +17,7 @@ export function FooterTodo({ setModalVisible }: FooterTodoProps) {
           className="flex justify-center items-center h-16 w-16"
           onPress={() => router.push({ pathname: '/tasksCompleted', params: { username } })}
         >
-          <FontAwesome5 name="list" size={24} color="white" />
+          <FontAwesome5 name="check-circle" size={28} color="white" />
         </TouchableOpacity>
 
         <TouchableOpacity

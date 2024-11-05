@@ -4,12 +4,12 @@ import { useFonts } from 'expo-font';
 import { Text, View } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import { SplashScreen, router } from 'expo-router';
-import { useLoginUser } from '../database/auth';
+import { useLoginUser } from '../hooks/auth';
 import { Footer } from '../components/footers/footer';
 import { Header } from '../components/headers/header'
-import { TextInputField } from '../components/textInput';
-import { ButtonAcess } from '../components/buttonAcess'
-import { AuthLink } from '../components/authLink';
+import { TextInputField } from '../components/login/textInput';
+import { ButtonAcess } from '../components/login/buttonAcess'
+import { AuthLink } from '../components/login/authLink';
 
 export default function Login() {
 

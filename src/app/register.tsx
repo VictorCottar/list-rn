@@ -3,12 +3,12 @@ import React, { useState } from 'react';
 import { Text, View } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import { router } from 'expo-router';
-import { useRegisterUser } from '../database/auth';
+import { useRegisterUser } from '../hooks/auth';
 import { Footer } from '../components/footers/footer';
-import { TextInputField } from '../components/textInput'
+import { TextInputField } from '../components/login/textInput'
 import { Header } from '../components/headers/header'
-import { ButtonAcess } from '../components/buttonAcess'
-import { AuthLink } from '../components/authLink';
+import { ButtonAcess } from '../components/login/buttonAcess'
+import { AuthLink } from '../components/login/authLink';
 
 export default function Register() {
 

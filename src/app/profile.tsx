@@ -1,8 +1,8 @@
 import { router, useLocalSearchParams } from "expo-router"
 import { Text, TouchableOpacity, View } from "react-native"
 import AntDesign from '@expo/vector-icons/AntDesign';
-import {  useState, useEffect } from "react";
-import { useTask } from "../database/tasks";
+import { useState, useEffect } from "react";
+import { useTask } from "../hooks/tasks";
 
 export default function Profile() {
   const { username } = useLocalSearchParams();
@@ -13,13 +13,13 @@ export default function Profile() {
     const fetchCompletedTasks = async () => {
       try {
         const count = await countTasksCompleted();
-        setCompletedTasks(count); // Atualiza o estado com o número de tarefas concluídas
+        setCompletedTasks(count); // atualiza o estado com o número de tarefas concluídas
       } catch (error) {
         console.error('erro ao contar tarefas concluídas:', error);
       }
     };
 
-    fetchCompletedTasks(); // Chama a função ao montar o componente
+    fetchCompletedTasks(); // chama a função ao montar o componente
   }, [countTasksCompleted]);
 
   return (

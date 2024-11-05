@@ -43,7 +43,7 @@ export function useTask() {
     try {
       // Especifica o tipo do resultado como um objeto com uma propriedade "COUNT(*)"
       const result = await database.getFirstAsync("SELECT COUNT(*) as count FROM Tasks WHERE completed = 1") as { count: number };
-      
+
       // Retorna o valor de `count`
       return result.count;
     } catch (error) {
@@ -67,7 +67,7 @@ export function useTask() {
   async function getAllTasksCompleted(): Promise<ITask[]> {
     try {
       const result = await database.getAllAsync("SELECT * FROM Tasks WHERE completed = 1 ORDER BY id DESC");
-      return result.map((task: any ) => ({
+      return result.map((task: any) => ({
         id: task.id,
         title: task.title,
         description: task.description,
