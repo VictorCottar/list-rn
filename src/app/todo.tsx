@@ -26,6 +26,8 @@ export default function Todo() {
     { label: 'baixa', value: 'baixa' },
   ];
 
+  const incompleteTasks = tasks.filter(task => !task.completed);
+
   const handleAddTask = async () => {
     if (newTaskTitle !== '' && newTaskDescription !== '' && priority !== '') {
       const newTask: Task = {
@@ -80,13 +82,14 @@ export default function Todo() {
     loadTasks();
   }, []);
 
+
   return (
     <View className='flex-1 items-center font-archivo'>
       <HeaderTodo username={username as string} />
 
       <View className="flex justify-center items-center w-full h-2/3 mt-8 space-y-4">
         <TaskList
-          tasks={tasks}
+          tasks={incompleteTasks}
           onTaskPress={setSelectedTask}
         />
 
