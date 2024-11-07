@@ -86,8 +86,7 @@ export default function Todo() {
   return (
     <View className='flex-1 items-center font-archivo'>
       <HeaderTodo username={username as string} />
-
-      <View className="flex justify-center items-center w-full h-2/3 mt-8 space-y-4">
+       <View className="flex justify-center items-center w-full h-2/3 mt-8 space-y-4">
         <TaskList
           tasks={incompleteTasks}
           onTaskPress={setSelectedTask}

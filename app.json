@@ -2,24 +2,27 @@
   "expo": {
     "name": "list",
     "slug": "list",
+    "description": "um aplicativo para você organizar suas tarefas!",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./src/assets/icon.png",
+    "icon": "./src/assets/list-icon.png",
     "userInterfaceStyle": "light",
     "scheme": "list",
     "splash": {
-      "image": "./src/assets/splash.png",
+      "image": "./src/assets/list-splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.your.list"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./src/assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.your.list"
     },
     "web": {
       "favicon": "./src/assets/favicon.png"
@@ -44,6 +47,15 @@
         }
       ],
       "expo-router"
-    ]
+    ],
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "59715357-6b41-4d14-98ea-53c41f40a90d"
+      }
+    },
+    "owner": "victorcottar"
   }
 }
